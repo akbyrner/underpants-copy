@@ -45,6 +45,14 @@ _.identity = function(value){
 * _.typeOf([1,2,3]) -> "array"
 */
 
+_.typeOf = function(value){
+    if (Array.isArray(value) === true){
+    return "array"
+    }else if (value === null){
+        return "null";
+    }
+    return typeof value;
+}
 
 /** _.first
 * Arguments:
@@ -64,6 +72,25 @@ _.identity = function(value){
 *   _.first(["a", "b", "c"], 2) -> ["a", "b"]
 */
 
+_.first = function(arr, num){
+    if (!Array.isArray(arr)) {
+        return [];
+      }
+    
+      if (typeof num !== 'number' || typeof num === "null") {
+        return arr[0];
+      }
+    
+      if (num < 0) {
+        return [];
+      }
+    
+      if (num > arr.length) {
+        return arr;
+      }
+    
+      return arr.slice(0, num);
+    }
 
 /** _.last
 * Arguments:
@@ -83,6 +110,25 @@ _.identity = function(value){
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
+_.last = function(arr, num){
+    if (!Array.isArray(arr)) {
+        return [];
+      }
+    
+      if (typeof num !== 'number' || typeof num === "null") {
+        return arr[arr.length - 1];
+      }
+    
+      if (num < 0) {
+        return [];
+      }
+    
+      if (num > arr.length) {
+        return arr;
+      }
+    
+      return arr.slice(num, arr.length - 1);
+    }
 
 /** _.indexOf
 * Arguments:
