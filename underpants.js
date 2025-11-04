@@ -145,7 +145,9 @@ _.last = function(arr, num){
 *   _.indexOf(["a","b","c"], "c") -> 2
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
-
+_.indexOf = function(arr, value){
+    
+}
 
 /** _.contains
 * Arguments:
