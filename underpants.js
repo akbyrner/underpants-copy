@@ -110,25 +110,21 @@ _.first = function(arr, num){
 *   _.last(["a", "b", "c"], 2) -> ["b", "c"]
 */
 
-_.last = function(arr, num){
-    if (!Array.isArray(arr)) {
-        return [];
-      }
-    
-      if (typeof num !== 'number' || typeof num === "null") {
-        return arr[arr.length - 1];
-      }
-    
-      if (num < 0) {
-        return [];
-      }
-    
-      if (num > arr.length) {
-        return arr;
-      }
-    
-      return arr.slice(num, arr.length - 1);
-    }
+_.last = function(array, number) {
+  if (!Array.isArray(array)) {
+    return [];
+  }
+
+  if (typeof number !== 'number' || number <= 0) {
+    return array[array.length - 1];
+  }
+
+  if (number > array.length) {
+    return array;
+  }
+
+  return array.slice(array.length - number);
+};
 
 /** _.indexOf
 * Arguments:
@@ -260,6 +256,21 @@ _.indexOf = function(arr, value){
 *   _.map([1,2,3,4], function(e){return e * 2}) -> [2,4,6,8]
 */
 
+_.map = function(collection, func) {
+  let result = [];
+  if (Array.isArray(collection)) {
+    for (let i = 0; i < collection.length; i++) {
+      result.push(func(collection[i], i, collection));
+    }
+  } else if (typeof collection === 'object' && collection !== null) {
+    for (let key in collection) {
+      if (collection.hasOwnProperty(key)) {
+        result.push(func(collection[key], key, collection));
+      }
+    }
+  }
+  return result;
+};
 
 /** _.pluck
 * Arguments:
@@ -272,6 +283,11 @@ _.indexOf = function(arr, value){
 *   _.pluck([{a: "one"}, {a: "two"}], "a") -> ["one", "two"]
 */
 
+_.pluck = function(array, property) {
+  return _.map(array, function(obj) {
+    return obj[property];
+  });
+};
 
 /** _.every
 * Arguments:
