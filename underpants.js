@@ -302,7 +302,7 @@ _.partition = function(arr, func){
       falsy.push(arr[i]);
     }
   }
-  
+  return [truthy, falsy]
 }
 
 /** _.map
@@ -375,6 +375,32 @@ _.pluck = function(array, property) {
 *   _.every([1,2,3], function(e){return e % 2 === 0}) -> false
 */
 
+_.every = function(collection, func) {
+  if (func === undefined) {
+    for (let key in collection) {
+      if (!collection[key]) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  if (Array.isArray(collection)) {
+    for (let i = 0; i < collection.length; i++) {
+      if (!func(collection[i], i, collection)) {
+        return false;
+      }
+    }
+    return true;
+  } else {
+    for (let key in collection) {
+      if (!func(collection[key], key, collection)) {
+        return false;
+      }
+    }
+    return true;
+  }
+};
 
 /** _.some
 * Arguments:
@@ -397,6 +423,32 @@ _.pluck = function(array, property) {
 *   _.some([1,2,3], function(e){return e % 2 === 0}) -> true
 */
 
+_.some = function(collection, func) {
+  if (func === undefined) {
+    for (let key in collection) {
+      if (collection[key]) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  if (Array.isArray(collection)) {
+    for (let i = 0; i < collection.length; i++) {
+      if (func(collection[i], i, collection)) {
+        return true;
+      }
+    }
+    return false;
+  } else {
+    for (let key in collection) {
+      if (func(collection[key], key, collection)) {
+        return true;
+      }
+    }
+    return false;
+  }
+};
 
 /** _.reduce
 * Arguments:
@@ -417,6 +469,18 @@ _.pluck = function(array, property) {
 *   _.reduce([1,2,3], function(previousSum, currentValue, currentIndex){ return previousSum + currentValue }, 0) -> 6
 */
 
+_.reduce = function(arr, func, seed){
+  let result = seed;
+  if (result === undefined){
+    result = arr[0];
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    result = func(result, arr[i], i);
+  }
+
+  return result;
+};
 
 /** _.extend
 * Arguments:
@@ -432,6 +496,21 @@ _.pluck = function(array, property) {
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(obj1, obj2, ...objects) {
+  let target = obj1;
+
+  for (let i = 0; i < arguments.length; i++) {
+    let source = arguments[i];
+    if (typeof source === 'object' && source !== null) {
+      for (let key in source) {
+          target[key] = source[key];
+      }
+    }
+  }
+
+  return target;
+};
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////
