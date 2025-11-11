@@ -111,11 +111,11 @@ _.first = function(arr, num){
 */
 
 _.last = function(array, number) {
-  if (!Array.isArray(array)) {
+  if (!Array.isArray(array) || number <= 0) {
     return [];
   }
 
-  if (typeof number !== 'number' || number <= 0) {
+  if (typeof number !== 'number') {
     return array[array.length - 1];
   }
 
@@ -142,7 +142,12 @@ _.last = function(array, number) {
 *   _.indexOf(["a","b","c"], "d") -> -1
 */
 _.indexOf = function(arr, value){
-    
+    for (let i = 0; i <= arr.length - 1; i++){
+      if (arr[i] === value){
+        return i;
+      }
+    }
+    return -1;
 }
 
 /** _.contains
@@ -160,6 +165,14 @@ _.indexOf = function(arr, value){
 *   _.contains([1,"two", 3.14], "two") -> true
 */
 
+_.contains = function(array, value){
+  for (let i = 0; i <= array.length - 1; i++){
+    if (value === array [i]){
+      return true;
+    }
+  }
+  return false;
+}
 
 /** _.each
 * Arguments:
@@ -177,6 +190,17 @@ _.indexOf = function(arr, value){
 *      -> should log "a" "b" "c" to the console
 */
 
+_.each = function(collection, func){
+  if (Array.isArray(collection)){
+    for (let i = 0; i <= collection.length - 1; i++){
+      func(collection[i], i, collection);
+    }
+  }else if(typeof collection === 'object'){
+    for (var prop in collection){
+      func(collection[prop], prop, collection);
+    }
+  }
+}
 
 /** _.unique
 * Arguments:
@@ -188,6 +212,15 @@ _.indexOf = function(arr, value){
 *   _.unique([1,2,2,4,5,6,5,2]) -> [1,2,4,5,6]
 */
 
+_.unique = function(array){
+  let result = [];
+  for (let i = 0; i < array.length; i++){
+    if (_.indexOf(result, array[i]) === -1){
+      result.push(array[i]);
+    }
+  }
+  return result;
+}
 
 /** _.filter
 * Arguments:
@@ -205,6 +238,15 @@ _.indexOf = function(arr, value){
 *   use _.each in your implementation
 */
 
+_.filter = function(arr, func){
+  let result = [];
+  for (let i = 0; i < arr.length; i++){
+    if (func(arr[i], i, arr)){
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}
 
 /** _.reject
 * Arguments:
@@ -219,6 +261,15 @@ _.indexOf = function(arr, value){
 *   _.reject([1,2,3,4,5], function(e){return e%2 === 0}) -> [1,3,5]
 */
 
+_.reject = function(arr, func){
+  let result = [];
+  for (let i = 0; i < arr.length; i++){
+    if (!func(arr[i], i, arr)){
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}
 
 /** _.partition
 * Arguments:
@@ -239,6 +290,20 @@ _.indexOf = function(arr, value){
 }
 */
 
+_.partition = function(arr, func){
+  let truthy = [];
+  let falsy = [];
+  let result = [];
+
+  for (let i = 0; i < arr.length; i++){
+    if (func(arr[i], arr['key'], arr)){
+      truthy.push(arr[i]);
+    }else {
+      falsy.push(arr[i]);
+    }
+  }
+  
+}
 
 /** _.map
 * Arguments:
