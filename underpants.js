@@ -472,7 +472,7 @@ _.some = function(collection, func) {
 _.reduce = function(arr, func, seed){
   let result = seed;
   if (result === undefined){
-    result = arr[0];
+    result = 1;
   }
 
   for (let i = 0; i < arr.length; i++) {
